@@ -1,4 +1,6 @@
 import React,{useState, useEffect} from 'react'
+import alienSrc from '../../image/alien.svg'
+import {getRandomInt} from '../../utils/getRandomInt'
 
 const Alien = (props) => {
     const [topPos, setTopPos] = useState(20)
@@ -7,7 +9,7 @@ const Alien = (props) => {
     useEffect(() => {
         setMyInterval(setInterval(() => {
            setTopPos(prev => prev+=5)
-        }, 50)) 
+        }, getRandomInt(20, 50))) 
     },[])
 
 
@@ -21,15 +23,13 @@ const Alien = (props) => {
         if(topPos >= window.innerHeight - 50){
             props.deleteAlien(props.alien.id)
             clearInterval(myInterval)
-        }else {
-            // props.getAlienPos(document.querySelectorAll('.alien'))
-           //console.log({x: props.alien.x, y: topPos})
         }
     },[topPos])
 
     
     return (
         <div className="alien" id={props.alien.id} style={{left: props.alien.x, top: topPos}}>
+            <img src={alienSrc} />
         </div>
     )
 }

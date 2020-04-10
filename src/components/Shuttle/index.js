@@ -1,40 +1,45 @@
 import React, {useEffect, useState} from 'react'
 import shuttleUrl from '../../image/shuttle.svg'
+import explosionUrl from '../../image/explosion.gif'
 import Drop from '../Drop'
+import {mainWidth} from '../../constants'
+
 
 const Shuttle = (props) => {
-    const [leftValue, setLeftValue] = useState(null)
+    const [leftValue, setLeftValue] = useState( (mainWidth()/2) - 25 )
     const [isMoving, setIsMoving] = useState({pressed: false, key: ''})
     let [intervalMove, setIntervalMove] = useState()
-    
     const [drops, setDrops] = useState([])
     
     let i = 1;
     
     const downHandler = ({key, code}) => {
-        if(key === 'ArrowRight' || key === 'ArrowLeft') {
-            setIsMoving({pressed: true, key})
-        } 
-
-        if(code === "Space"){
-            i++
-            setDrops(state =>  [...state, {id: i, y: document.querySelector('.shuttle').offsetLeft}])
+        if(!props.explosion){
+            if(key === 'ArrowRight' || key === 'ArrowLeft') {
+                setIsMoving({pressed: true, key})
+            } 
+            if(code === "Space"){
+                i++
+                setDrops(state =>  
+                    [...state, 
+                    {id: i, y: document.querySelector('.shuttle').offsetLeft + 25}
+                ])
+            }
         }
     }
 
-
     const upHandler = ({ key, code }) => {
-       setIsMoving({pressed: false, key})
+        if(!props.explosion){
+            setIsMoving({pressed: false, key})
+        }
     };
 
     const moveShuttle = (key) => {
         const offsetLeft = document.querySelector('.shuttle').offsetLeft
-        if(offsetLeft < window.innerWidth - 80 && key === "ArrowRight"){
+        if(offsetLeft < window.innerWidth - 120 && key === "ArrowRight"){
             setLeftValue((prev) => prev+=20)
-         //   props.shuttlePos(offsetLeft + 50)
         }else if(offsetLeft > 40 && key === "ArrowLeft"){
             setLeftValue((prev) => prev-=20)
-          //  props.shuttlePos(offsetLeft - 20)
         }else {
             clearInterval(intervalMove)
         }
@@ -50,12 +55,9 @@ const Shuttle = (props) => {
         }
     },[isMoving.pressed])
 
-    
     useEffect(() => {
-       // props.shuttlePos({x: offsetLeft, y: offsetTop })
         window.addEventListener('keydown', downHandler);
         window.addEventListener('keyup', upHandler);
-        // Remove event listeners on cleanup
         return () => {
           window.removeEventListener('keydown', downHandler);
           window.removeEventListener('keyup', upHandler);
@@ -64,14 +66,18 @@ const Shuttle = (props) => {
 
 
     return (
-        <>
+        <div className="shuttle-container">
             <div className="shuttle" style={{left: leftValue}}>
-                <img src={shuttleUrl} />
+                 <img src={!props.explosion ? shuttleUrl : explosionUrl} />
             </div>
             {drops.map((drop, i) => (
-                <Drop key={drop.id} left={drop.y} deleteDrop={(id) => setDrops(drops.filter(d => d.id !== drop.id)) } />
+                <Drop 
+                    key={drop.id} 
+                    left={drop.y} 
+                    startPos={70}
+                    deleteDrop={(id) => setDrops(drops.filter(d => d.id !== drop.id)) } />
             ))}
-        </>
+        </div>
     )
 }
 

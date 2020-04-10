@@ -1,12 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import Alien from './Alien'
-
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min; //Il max è escluso e il min è incluso
-  }
-
+import {getRandomInt} from '../../utils/getRandomInt'
+import {totalAliens} from '../../constants'
 
 const Aliens = (props) => {
     const [aliens, setAliens] = useState([])
@@ -20,9 +15,8 @@ const Aliens = (props) => {
         let randomX;
         setTimeout(() => {
             randomX = getRandomInt(20, 500)
-            if(i <= 10){
+            if(i <= totalAliens){
                 setAliens((state) => [...state, {id: i,  x: randomX}])
-              
                 createAlien()
             }else{
                return
@@ -37,12 +31,15 @@ const Aliens = (props) => {
     }, [])
 
     useEffect(() => {
-        deleteAlien(props.alienToDelete)
+        if(props.alienToDelete !== null){
+            deleteAlien(props.alienToDelete)
+            // console.log('deleteAlien', props.alienToDelete)
+        }
     }, [props.alienToDelete])
 
     return (
         aliens.map((alien, i) => (
-            <Alien key={alien.id} /* getAlienPos={(alienPos) => props.getAlienPos(alienPos) } */ alien={alien}  deleteAlien={(id) => deleteAlien(id) } />
+            <Alien key={alien.id} alien={alien}  deleteAlien={(id) => deleteAlien(id) } />
         ))
     )
 }

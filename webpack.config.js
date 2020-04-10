@@ -10,13 +10,6 @@ module.exports = {
         }
       },
       {
-        test: /\.svg/,
-        use: {
-            loader: 'svg-url-loader',
-            options: {}
-        }
-      },
-      {
         test: /\.s[ac]ss$/i,
         use: [
           // Creates `style` nodes from JS strings
@@ -26,6 +19,25 @@ module.exports = {
           // Compiles Sass to CSS
           'sass-loader',
         ],
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|png|jpe?g|gif)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+           /*  options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts/'
+            } */
+          }
+        ]
+      },
+      {
+        test: /\.svg/,
+        use: {
+            loader: 'svg-url-loader',
+            options: {}
+        }
       },
       {
         test: /\.html$/,

@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react'
 
 const Drop = (props) => {
-    /* const positionX = props.shuttlePosition
-    const [positionY, setPositionY] = useState(window.innerHeight - 50) */
     const [myInterval, setMyInterval] = useState()
-    const [topPos, setTopPos] = useState(0)
+    const [topPos, setTopPos] = useState(props.startPos)
     
     useEffect(() => {
         setMyInterval(setInterval(() => {
