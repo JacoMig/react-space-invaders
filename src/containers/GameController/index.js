@@ -24,8 +24,9 @@ const GameController = () => {
     const retryGame = () => {
         setExplosion(false);
         setCountScore(0);
-        setGameOver(false)
-        setIdToDelete(null)
+        setHitShuttle(0);
+        setGameOver(false);
+        setIdToDelete(null);
     }
 
     useEffect(() => {

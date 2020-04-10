@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import Alien from './Alien'
 import {getRandomInt} from '../../utils/getRandomInt'
-import {totalAliens} from '../../constants'
+import {totalAliens, mainWidth} from '../../constants'
 
 const Aliens = (props) => {
     const [aliens, setAliens] = useState([])
@@ -12,11 +12,11 @@ const Aliens = (props) => {
     
     let i = 0
     const createAlien = () => {
-        let randomX;
+        let xPos;
         setTimeout(() => {
-            randomX = getRandomInt(20, 500)
+            xPos = getRandomInt(20, ( mainWidth() - 50 ))
             if(i <= totalAliens){
-                setAliens((state) => [...state, {id: i,  x: randomX}])
+                setAliens((state) => [...state, {id: i,  x: xPos}])
                 createAlien()
             }else{
                return
