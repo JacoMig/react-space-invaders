@@ -3,4 +3,5 @@
 Simple React version of Space Invaders. <br>
 ### npm i
 ### npm start
+space bar for shooting, arrows for moving
 ... enjoy
