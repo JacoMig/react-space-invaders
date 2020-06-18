@@ -1,11 +1,14 @@
 {
   "name": "space-invaders",
   "version": "1.0.0",
-  "description": "",
+  "description": "Space invaders made with React",
   "main": "index.js",
+  "homepage": "https://jacomig.github.io/react-space-invaders/",
   "scripts": {
     "start": "webpack-dev-server --open --hot --mode development",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +19,7 @@
     "@babel/preset-react": "^7.9.4",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.1",
+    "gh-pages": "^3.0.0",
     "html-loader": "^1.1.0",
     "html-webpack-plugin": "^4.0.4",
     "react": "^16.13.1",

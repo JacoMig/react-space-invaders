@@ -9,6 +9,7 @@ class App extends React.Component {
         return (
             <div className="main" style={{width: mainWidth() }}>
                 <GameController />
+                <p>SPACE BAR for shooting, ARROWS for moving </p>
             </div>)
         
     }
